@@ -1,0 +1,212 @@
+﻿@page "/flight"
+@using MauiAppFlightReservation.Model
+@using System.Linq
+
+
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h4>Flight Finder</h4>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div>
+                <label for="locations">From:</label>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <select class="form-control" @bind="SelectedFrom">
+                        <option value="" disabled selected>Select departure location</option>
+                        @foreach (var flight in Flights.OrderBy(f => f.From).GroupBy(f => f.From).Select(g => g.First()))
+                        {
+                            <option value="@flight.From">@flight.From</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div>
+                <label for="locations">To:</label>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <select class="form-control" @bind="SelectedTo">
+                        <option value="" disabled selected>Select arrival location</option>
+                        @foreach (var flight in Flights.OrderBy(f => f.To).GroupBy(f => f.To).Select(g => g.First()))
+                        {
+                        <option value="@flight.To">@flight.To</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div>
+                <label for="days">Day:</label>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <select class="form-control" id="dropdown" @bind="SelectedWeekday">
+                        <option value="" disabled selected>Select day</option>
+                        @foreach (Flights flight in Flights.GroupBy(f => f.Weekday).Select(g => g.First()))
+                        {
+                            <option value="@flight.Weekday">@flight.Weekday</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div>
+                <label></label>
+            </div>
+            <div class="mt-auto">
+                <button type="button" class="btn btn-primary w-100" @onclick="FindFlights">Find Flights</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center mt-4">
+        <div class="col-12 text-center">
+            <h4>Flights</h4>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <input type="text" class="form-control" id="flightDetail" name="flightDetail" @bind="FlightDetails" readonly>
+</div>
+
+@*
+<div class="container">
+    <table class="table table-bordered" text="centre">
+        <thead class="thead-light">
+            <tr>
+                <th class="text-center">Flight Code</th>
+                <th class="text-center">Airline</th>
+                <th class="text-center">Departure</th>
+                <th class="text-center">Arrival</th>
+                <th class="text-center">Weekday</th>
+                <th class="text-center">Time</th>
+                <th class="text-center">Seat</th>
+                <th class="text-center">Cost per Seat</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (Flights flight in Flights)
+        {
+            <tr>
+                <td>@flight.Code</td>
+                <td>@flight.Airline</td>
+                <td>@flight.From</td>
+                <td>@flight.To</td>
+                <td>@flight.Weekday</td>
+                <td>@flight.Time</td>
+                <td>@flight.Seats</td>
+                <td>@flight.CostPerSeat</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+*@
+
+
+
+
+<div class="container">
+    <div class="row justify-content-center mt-4">
+        <div class="col-12 text-center mt-4">
+            <h4>Reserve</h4>
+        </div>
+    </div>
+</div>
+
+
+<div class="col">
+    <div>
+        <label for="flightcode">Flight code:</label>
+    </div>
+    <div>
+        <input type="text" class="form-control" id="flightCode" name="flightCode" placeholder="Flight" @bind="SelectedFlightCode" readonly>
+    </div>
+</div>
+
+<div class="col">
+    <div>
+        <label class="mt-3" for="airline">Airline:</label>
+    </div>
+    <div>
+        <input type="text" class="form-control" id="airline" name="airline" placeholder="Airline" @bind="SelectedAirline" readonly>
+    </div>
+</div>
+
+<div class="col">
+    <div>
+        <label class="mt-3" for="weekday">Day:</label>
+    </div>
+    <div>
+        <input type="text" class="form-control" id="weekday" name="weekday" placeholder="Day" @bind-value="SelectedWeekday" readonly>
+    </div>
+</div>
+
+<div class="col">
+    <div>
+        <label class="mt-3" for="time">Time:</label>
+    </div>
+    <div>
+        <input type="text" class="form-control" id="time" name="time" placeholder="Time" @bind-value="SelectedTime" readonly>
+    </div>
+</div>
+
+<div class="col">
+    <div>
+        <label class="mt-3" for="cost">Cost:</label>
+    </div>
+    <div>
+        <input type="text" class="form-control" id="costperseat" name="costperseat" placeholder="0" @bind-value="SelectedCostPerSeat" readonly>
+    </div>
+</div>
+
+<div class="col">
+    <div>
+        <label class="mt-3" for="name">Name:</label>
+    </div>
+    <div>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Name" @bind="Name">
+    </div>
+</div>
+
+<div class="col">
+    <div>
+        <label class="mt-3" for="citizenship">Citizenship:</label>
+    </div>
+    <div>
+        <input type="text" class="form-control" id="citizenship" name="citizenship" placeholder="Read" @bind-value="Citizenship">
+    </div>
+</div>
+
+
+<div class="col text-center mt-5">
+    <div class="mt-auto">
+        <button type="button" class="btn btn-primary w-25" @onclick="MakeReservation">Reserve</button>
+    </div>
+    <div>
+        <ul>
+            <label class="mt-2 mb-5"> Reservation Code:@DisplayResCode</label>
+        </ul>
+    </div>
+</div>
+
+
+@code {
+        
+}

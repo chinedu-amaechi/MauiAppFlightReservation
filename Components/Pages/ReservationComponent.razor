@@ -1,0 +1,170 @@
+﻿@page "/reservation"
+@using MauiAppFlightReservation.Model
+@using System.Linq
+
+
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h4>Reservation Finder</h4>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div>
+                <label for="code">Reservation Code:</label>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <select class="form-control" @bind="ResCode">
+                        <option value="" disabled selected>Reservation Code</option>
+                        @foreach (var reservation in Reservations.OrderBy(f => f.Code).GroupBy(f => f.Code).Select(g => g.First()))
+                        {
+                            <option value="@reservation.Code">@reservation.Code</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div>
+                <label for="airline">Airline:</label>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <select class="form-control" @bind="ResAirline">
+                        <option value="" disabled selected>Airline</option>
+                        @foreach (var reservation in Reservations.OrderBy(f => f.Airline).GroupBy(f => f.Airline).Select(g => g.First()))
+                        {
+                            <option value="@reservation.Airline">@reservation.Airline</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div>
+                <label for="name">Name:</label>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <select class="form-control" @bind="ResName">
+                        <option value="" disabled selected>Name</option>
+                        @foreach (var reservation in Reservations.OrderBy(f => f.Name).GroupBy(f => f.Name).Select(g => g.First()))
+                        {
+                            <option value="@reservation.Name">@reservation.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div>
+                <label></label>
+            </div>
+            <div class="mt-auto">
+                <button type="button" class="btn btn-primary w-100" @onclick="FindReservations">Find Reservations</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center mt-4">
+        <div class="col-12 text-center">
+            <h4>Reservations</h4>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <input type="text" class="form-control" id="reservationDetail" name="reservationDetail" @bind="ReservationDetails" readonly>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center mt-4">
+        <div class="col-12 text-center mt-4">
+            <h4>Reserve</h4>
+        </div>
+    </div>
+</div>
+
+
+<div class="col">
+    <div>
+        <label for="reservationcode">Reservation code:</label>
+    </div>
+    <div>
+        <input type="text" class="form-control" id="reservationCode" name="reservationCode" placeholder="Rescode" @bind="ResCode" readonly>
+    </div>
+</div>
+
+<div class="col">
+    <div>
+        <label class="mt-3" for="flightcode">Flight code:</label>
+    </div>
+    <div>
+        <input type="text" class="form-control" id="flightCode" name="flightCode" placeholder="Code" @bind="ResFlightCode" readonly>
+    </div>
+</div>
+
+<div class="col">
+    <div>
+        <label class="mt-3" for="weekday">Airline:</label>
+    </div>
+    <div>
+        <input type="text" class="form-control" id="weekday" name="weekday" placeholder="Airline" @bind="ResAirline" readonly>
+    </div>
+</div>
+
+<div class="col">
+    <div>
+        <label class="mt-3" for="cost">Cost:</label>
+    </div>
+    <div>
+        <input type="text" class="form-control" id="costperseat" name="costperseat" placeholder="0" @bind="ResCost" readonly>
+    </div>
+</div>
+
+<div class="col">
+    <div>
+        <label class="mt-3" for="time">Name:</label>
+    </div>
+    <div>
+        <input type="text" class="form-control" id="time" name="time" placeholder="Name" @bind="ResName">
+    </div>
+</div>
+
+
+<div class="col">
+    <div>
+        <label class="mt-3" for="name">Citizenship:</label>
+    </div>
+    <div>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Citizenship" @bind="ResCitizenship">
+    </div>
+</div>
+
+<div class="col">
+    <div>
+        <label class="mt-3" for="citizenship">Status:</label>
+    </div>
+    <div>
+        <input type="text" class="form-control" id="citizenship" name="citizenship" placeholder="Active" @bind="ResStatus">
+    </div>
+</div>
+
+<div class="col text-center mt-5">
+    <div class="mt-2 mb-5">
+        <button type="button" class="btn btn-primary w-25" @onclick="ModifyReservation">Save</button>
+    </div>
+</div>
+
+
+@code {
+
+}

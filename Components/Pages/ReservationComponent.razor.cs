@@ -1,4 +1,4 @@
-﻿using MauiAppFlightReservation.Model;
+using MauiAppFlightReservation.Model;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.IO;
@@ -14,23 +14,30 @@ namespace MauiAppFlightReservation.Components.Pages
     {
         List<Reservation> Reservations = new List<Reservation>();
         string ResCode { get; set; }
+        string SelectedResCode { get; set; }
         string ResFlightCode { get; set; }
+        string SelectedResFlightCode { get; set; }
         string ResAirline { get; set; }
+        string SelectedResAirline { get; set; }
         double ResCost { get; set; }
+        double SelectedResCost { get; set; }
         string ResName { get; set; }
+        string SelectedResName { get; set; }
         string ResCitizenship { get; set; }
+        string SelectedResCitizenship { get; set; }
         string ResStatus { get; set; }
+        string SelectedResStatus { get; set; }
 
 
         protected override void OnInitialized()
         {
             LoadReservation();
         }
-        
+        /*
         public override string ToString()
         {
             return $"{ReservationManager.GenerateRandomReservationCode()},{ResFlightCode}, {ResAirline}, {ResCost}, {ResName}, {ResCitizenship}, Active\n";
-        }
+        } */
         void LoadReservation()
         {
             string resDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wwwroot/Data");
@@ -68,39 +75,35 @@ namespace MauiAppFlightReservation.Components.Pages
         void FindReservations()
         {
             var filteredReservation = Reservations.Where(f => f.Code == ResCode && f.Airline == ResAirline && f.Name == ResName);
-            ReservationDetails = string.Join("\n", filteredReservation.Select(f => $"{f.Code}, {f.FlightCode}, {f.Airline}, {f.Cost}, {f.Name}, {f.Citizenship}, {f.Status}"));
+            ReservationDetails = string.Join("\n",filteredReservation.Select(f => $"{f.Code},{f.FlightCode},{f.Airline},{f.Cost},{f.Name},{f.Citizenship},{f.Status}"));
 
             var selectedReservation = filteredReservation.FirstOrDefault();
             if (selectedReservation != null)
             {
-                ResCode = selectedReservation.Code;
-                ResFlightCode = selectedReservation.FlightCode;
-                ResAirline = selectedReservation.Airline;
-                ResCost = selectedReservation.Cost;
-                ResName = selectedReservation.Name;
-                ResCitizenship = selectedReservation.Citizenship;
-                ResStatus = selectedReservation.Status;
+                SelectedResCode = selectedReservation.Code;
+                SelectedResFlightCode = selectedReservation.FlightCode;
+                SelectedResAirline = selectedReservation.Airline;
+                SelectedResCost = selectedReservation.Cost;
+                SelectedResName = selectedReservation.Name;
+                SelectedResCitizenship = selectedReservation.Citizenship;
+                SelectedResStatus = selectedReservation.Status;
             }
         }
 
 
         void ModifyReservation()
         {
-            // Find the reservation to modify
+            // Find the reservation to modify using ResCode
             var reservationToModify = Reservations.FirstOrDefault(r => r.Code == ResCode);
 
             if (reservationToModify != null)
             {
-                // Update the reservation's properties
-                reservationToModify.FlightCode = ResFlightCode;
-                reservationToModify.Airline = ResAirline;
-                reservationToModify.Cost = ResCost;
-                reservationToModify.Name = ResName;
-                reservationToModify.Citizenship = ResCitizenship;
-                reservationToModify.Status = ResStatus;
+                // Update the reservation's properties with values from the web interface
+                reservationToModify.Name = SelectedResName;
+                reservationToModify.Citizenship = SelectedResCitizenship;
 
                 // Update ReservationDetails string
-                ReservationDetails = string.Join("\n", Reservations.Select(r => $"{r.Code}, {r.FlightCode}, {r.Airline}, {r.Cost}, {r.Name}, {r.Citizenship}, {r.Status}"));
+                ReservationDetails = string.Join("\n", Reservations.Select(r => $"{r.Code},{r.FlightCode},{r.Airline},{r.Cost},{r.Name},{r.Citizenship},{r.Status}"));
 
                 // Write the modified reservations back to the file
                 string resDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wwwroot/Data");

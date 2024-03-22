@@ -1,4 +1,4 @@
-﻿using MauiAppFlightReservation.Model;
+using MauiAppFlightReservation.Model;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.IO;

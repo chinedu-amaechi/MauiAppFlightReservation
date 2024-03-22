@@ -1,4 +1,4 @@
-﻿@page "/reservation"
+@page "/reservation"
 @using MauiAppFlightReservation.Model
 @using System.Linq
 
@@ -99,7 +99,7 @@
         <label for="reservationcode">Reservation code:</label>
     </div>
     <div>
-        <input type="text" class="form-control" id="reservationCode" name="reservationCode" placeholder="Rescode" @bind="ResCode" readonly>
+        <input type="text" class="form-control" id="reservationCode" name="reservationCode" placeholder="Rescode" value="@SelectedResCode" readonly>
     </div>
 </div>
 
@@ -108,7 +108,7 @@
         <label class="mt-3" for="flightcode">Flight code:</label>
     </div>
     <div>
-        <input type="text" class="form-control" id="flightCode" name="flightCode" placeholder="Code" @bind="ResFlightCode" readonly>
+        <input type="text" class="form-control" id="flightCode" name="flightCode" placeholder="Code" value="@SelectedResFlightCode" readonly>
     </div>
 </div>
 
@@ -117,7 +117,7 @@
         <label class="mt-3" for="weekday">Airline:</label>
     </div>
     <div>
-        <input type="text" class="form-control" id="weekday" name="weekday" placeholder="Airline" @bind="ResAirline" readonly>
+        <input type="text" class="form-control" id="weekday" name="weekday" placeholder="Airline" value="@SelectedResAirline" readonly>
     </div>
 </div>
 
@@ -126,7 +126,7 @@
         <label class="mt-3" for="cost">Cost:</label>
     </div>
     <div>
-        <input type="text" class="form-control" id="costperseat" name="costperseat" placeholder="0" @bind="ResCost" readonly>
+        <input type="text" class="form-control" id="costperseat" name="costperseat" placeholder="0" value="@SelectedResCost" readonly>
     </div>
 </div>
 
@@ -135,7 +135,7 @@
         <label class="mt-3" for="time">Name:</label>
     </div>
     <div>
-        <input type="text" class="form-control" id="time" name="time" placeholder="Name" @bind="ResName">
+        <input type="text" class="form-control" id="time" name="time" placeholder="Name" @bind="@SelectedResName">
     </div>
 </div>
 
@@ -145,7 +145,7 @@
         <label class="mt-3" for="name">Citizenship:</label>
     </div>
     <div>
-        <input type="text" class="form-control" id="name" name="name" placeholder="Citizenship" @bind="ResCitizenship">
+        <input type="text" class="form-control" id="name" name="name" placeholder="Citizenship" @bind="@SelectedResCitizenship">
     </div>
 </div>
 
@@ -154,13 +154,13 @@
         <label class="mt-3" for="citizenship">Status:</label>
     </div>
     <div>
-        <input type="text" class="form-control" id="citizenship" name="citizenship" placeholder="Active" @bind="ResStatus">
+        <input type="text" class="form-control" id="citizenship" name="citizenship" placeholder="Active" value="@SelectedResStatus">
     </div>
 </div>
 
 <div class="col text-center mt-5">
     <div class="mt-2 mb-5">
-        <button type="button" class="btn btn-primary w-25" @onclick="ModifyReservation">Save</button>
+        <button type="button" class="btn btn-primary w-25" @onclick="@ModifyReservation">Save</button>
     </div>
 </div>
 

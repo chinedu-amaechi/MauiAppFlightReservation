@@ -29,7 +29,7 @@ namespace MauiAppFlightReservation.Model
 
         public override string ToString()
         {
-            return $"{Code}, {FlightCode}, {Airline}, {Cost}, {Name}, {Citizenship}, {Status}";
+            return $"{Code},{FlightCode},{Airline},{Cost},{Name},{Citizenship},{Status}\n";
         }
     }
 }
